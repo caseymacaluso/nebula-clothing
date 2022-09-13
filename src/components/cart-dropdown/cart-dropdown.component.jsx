@@ -1,4 +1,4 @@
-import { CartContext } from "../../contexts/cart.component";
+import { CartContext } from "../../contexts/cart.context";
 import { useContext } from "react";
 import "./cart-dropdown.styles.scss";
 import Button from "../button/button.component";
