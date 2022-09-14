@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState /* , useEffect */ } from "react";
 
 const addCartItem = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
@@ -54,15 +54,24 @@ export const CartContext = createContext({
 export const CartProvider = ({ children }) => {
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const [numberOfCartItems, setNumberOfCartItems] = useState(0);
+  // const [numberOfCartItems, setNumberOfCartItems] = useState(0);
 
-  useEffect(() => {
-    const newCartItemCount = cartItems.reduce(
-      (total, cartItem) => total + cartItem.quantity,
-      0
-    );
-    setNumberOfCartItems(newCartItemCount);
-  }, [cartItems]);
+  // useEffect(() => {
+  //   const newCartItemCount = cartItems.reduce(
+  //     (total, cartItem) => total + cartItem.quantity,
+  //     0
+  //   );
+  //   setNumberOfCartItems(newCartItemCount);
+  // }, [cartItems]);
+
+  const cartItemCount = cartItems.reduce(
+    (total, cartItem) => total + cartItem.quantity,
+    0
+  );
+  const cartTotal = cartItems.reduce(
+    (total, cartItem) => total + cartItem.quantity * cartItem.price,
+    0
+  );
 
   const addItemToCart = productToAdd => {
     setCartItems(addCartItem(cartItems, productToAdd));
@@ -83,7 +92,8 @@ export const CartProvider = ({ children }) => {
     addItemToCart,
     decrementItemFromCart,
     removeItemFromCart,
-    numberOfCartItems,
+    cartItemCount,
+    cartTotal,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
