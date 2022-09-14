@@ -15,9 +15,9 @@ const addCartItem = (cartItems, productToAdd) => {
   }
 };
 
-const removeCartItem = (cartItems, productToRemove) => {
+const decrementCartItem = (cartItems, productToDecrement) => {
   const existingCartItem = cartItems.find(
-    cartItem => cartItem.id === productToRemove.id
+    cartItem => cartItem.id === productToDecrement.id
   );
   if (existingCartItem.quantity === 1) {
     const newCartItems = cartItems.filter(
@@ -26,11 +26,18 @@ const removeCartItem = (cartItems, productToRemove) => {
     return newCartItems;
   } else {
     return cartItems.map(cartItem =>
-      cartItem.id === productToRemove.id
+      cartItem.id === productToDecrement.id
         ? { ...cartItem, quantity: cartItem.quantity - 1 }
         : cartItem
     );
   }
+};
+
+const removeCartItem = (cartItems, productToRemove) => {
+  const existingCartItem = cartItems.find(
+    cartItem => cartItem.id === productToRemove.id
+  );
+  return cartItems.filter(cartItem => cartItem.id !== existingCartItem.id);
 };
 
 export const CartContext = createContext({
@@ -38,6 +45,8 @@ export const CartContext = createContext({
   setShowCart: () => {},
   cartItems: [],
   addItemToCart: () => {},
+  decrementItemFromCart: () => {},
+  removeItemFromCart: () => {},
   numberOfCartItems: 0,
   setNumberOfCartItems: () => {},
 });
@@ -57,17 +66,22 @@ export const CartProvider = ({ children }) => {
 
   const addItemToCart = productToAdd => {
     setCartItems(addCartItem(cartItems, productToAdd));
-    // setNumberOfCartItems(numberOfCartItems + 1);
+  };
+
+  const decrementItemFromCart = productToDecrement => {
+    setCartItems(decrementCartItem(cartItems, productToDecrement));
   };
 
   const removeItemFromCart = productToRemove => {
     setCartItems(removeCartItem(cartItems, productToRemove));
   };
+
   const value = {
     showCart,
     setShowCart,
     cartItems,
     addItemToCart,
+    decrementItemFromCart,
     removeItemFromCart,
     numberOfCartItems,
   };
