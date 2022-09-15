@@ -3,12 +3,12 @@ import { getCategoriesAndDocuments } from "../utils/firebase/firebase.utils";
 // import PRODUCT_DATA from "../shop-data.json";
 // import SHOP_DATA from "../shop-data";
 
-export const ProductsContext = createContext({
-  productData: [],
+export const CategoriesContext = createContext({
+  categoriesMap: {},
 });
 
-export const ProductsProvider = ({ children }) => {
-  const [productData, setProductData] = useState([]);
+export const CategoriesProvider = ({ children }) => {
+  const [categoriesMap, setCategoriesMap] = useState({});
 
   // Done as a one-off to populate the database on Firebase
   // useEffect(() => {
@@ -18,16 +18,16 @@ export const ProductsProvider = ({ children }) => {
   useEffect(() => {
     const getCategoryMap = async () => {
       const categoryMap = await getCategoriesAndDocuments();
-      console.log(categoryMap);
+      setCategoriesMap(categoryMap);
     };
     getCategoryMap();
   }, []);
 
-  const value = { productData };
+  const value = { categoriesMap };
 
   return (
-    <ProductsContext.Provider value={value}>
+    <CategoriesContext.Provider value={value}>
       {children}
-    </ProductsContext.Provider>
+    </CategoriesContext.Provider>
   );
 };
