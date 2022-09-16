@@ -1,10 +1,11 @@
 import DirectoryItem from "../directory-item/directory-item.component";
 import { DirectoryContainer } from "./directory.styles";
+import { CATEGORIES } from "../../constants";
 
-const Directory = ({ categories }) => {
+const Directory = () => {
   return (
     <DirectoryContainer>
-      {categories.map(category => {
+      {CATEGORIES.map(category => {
         return <DirectoryItem key={category.id} category={category} />;
       })}
     </DirectoryContainer>
