@@ -3,4 +3,4 @@
 /////////////////////////////////////////
 
 // Simple selector to set the current user based off the state in the redux store
-export const setCurrentUser = state => state.user.setCurrentUser;
+export const selectCurrentUser = state => state.user.currentUser;
