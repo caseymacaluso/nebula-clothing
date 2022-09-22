@@ -22,3 +22,9 @@ export const selectCategoriesMap = createSelector(
       return acc;
     }, {})
 );
+
+// Selector that looks at the categories state and pulls the value for the isLoading item
+export const selectIsLoading = createSelector(
+  [selectCategoriesReducer],
+  categories => categories.isLoading
+);
