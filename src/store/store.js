@@ -1,10 +1,12 @@
 import { compose, createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
+import thunk from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 // root-reducer
 import { rootReducer } from "./root-reducer";
 
+// Configuration for Redux Persist
 const persistConfig = {
   key: "root",
   storage,
@@ -14,9 +16,11 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Don't want to pass false to middleware, so we filter and pass an empty array when the env is production
-const middleWares = [process.env.NODE_ENV !== "production" && logger].filter(
-  Boolean
-);
+// Thunk is included in the middlewares variable to support thunk operations
+const middleWares = [
+  process.env.NODE_ENV !== "production" && logger,
+  thunk,
+].filter(Boolean);
 
 // Composer that enables Redux Dev Tools Chrome extension for development purposes. If redux devtools extension doesn't exist, use the normal compose from redux.
 const composeEnhancer =
