@@ -25,7 +25,7 @@ const App = () => {
       dispatch(setCurrentUser(user));
     });
     return unsubscribe;
-  }, []);
+  });
 
   useEffect(() => {
     const getCategoryMap = async () => {
@@ -33,7 +33,7 @@ const App = () => {
       dispatch(setCategories(categoriesArray));
     };
     getCategoryMap();
-  }, []);
+  });
 
   return (
     <Routes>
