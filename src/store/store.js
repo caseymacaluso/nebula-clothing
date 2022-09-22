@@ -1,22 +1,9 @@
 import { compose, createStore, applyMiddleware } from "redux";
-// import logger from "redux-logger";
+import logger from "redux-logger";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 // root-reducer
 import { rootReducer } from "./root-reducer";
-
-const loggerMiddleware = store => next => action => {
-  if (!action.type) {
-    return next(action);
-  }
-  console.log("-------------------------------------");
-  console.log("type", action.type);
-  console.log("payload", action.payload);
-  console.log("current state", store.getState());
-  next(action);
-  console.log("next state", store.getState());
-  console.log("-------------------------------------");
-};
 
 const persistConfig = {
   key: "root",
@@ -26,9 +13,19 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleWares = [loggerMiddleware];
+// Don't want to pass false to middleware, so we filter and pass an empty array when the env is production
+const middleWares = [process.env.NODE_ENV !== "production" && logger].filter(
+  Boolean
+);
 
-const composedEnhancers = compose(applyMiddleware(...middleWares));
+// Composer that enables Redux Dev Tools Chrome extension for development purposes. If redux devtools extension doesn't exist, use the normal compose from redux.
+const composeEnhancer =
+  (process.env.NODE_ENV !== "production" &&
+    window &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
+
+const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
 export const store = createStore(
   persistedReducer,
