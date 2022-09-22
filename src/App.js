@@ -4,10 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener,
-  getCategoriesAndDocuments,
 } from "./utils/firebase/firebase.utils";
 import { setCurrentUser } from "./store/user/user.action";
-import { setCategories } from "./store/categories/categories.action";
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./routes/authentication/authentication.component";
@@ -25,14 +23,6 @@ const App = () => {
       dispatch(setCurrentUser(user));
     });
     return unsubscribe;
-  });
-
-  useEffect(() => {
-    const getCategoryMap = async () => {
-      const categoriesArray = await getCategoriesAndDocuments();
-      dispatch(setCategories(categoriesArray));
-    };
-    getCategoryMap();
   });
 
   return (
