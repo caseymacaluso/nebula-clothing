@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
+import { signUpStart } from "../../store/user/user.action";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import { SignUpContainer, SignUpTitle } from "./sign-up-form.styles";
@@ -16,6 +18,7 @@ const defaultFormFields = {
 };
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields; // Destructure from formFields object
 
@@ -42,14 +45,16 @@ const SignUpForm = () => {
 
     try {
       // Destructures user from the createAuthUserWithEmailAndPassword function
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
+      // const { user } = await createAuthUserWithEmailAndPassword(
+      //   email,
+      //   password
+      // );
 
-      // Creates a user document, but passes in the displayName as an additional argument
-      // without, the displayName ends up being null, and so the document will not be created
-      await createUserDocumentFromAuth(user, { displayName });
+      // // Creates a user document, but passes in the displayName as an additional argument
+      // // without, the displayName ends up being null, and so the document will not be created
+      // await createUserDocumentFromAuth(user, { displayName });
+
+      dispatch(signUpStart(email, password, displayName));
       // Resets form fields after document is created
       resetFormFields();
     } catch (e) {
