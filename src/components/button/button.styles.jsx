@@ -25,6 +25,10 @@ export const BaseButton = styled.button`
     color: black;
     border: 1px solid black;
   }
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 `;
 
 export const GoogleButton = styled(BaseButton)`
