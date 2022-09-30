@@ -20,7 +20,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const sagaMiddleWare = createSagaMiddleware();
 
 // Don't want to pass false to middleware, so we filter and pass an empty array when the env is production
-// Thunk is included in the middlewares variable to support thunk operations
 const middleWares = [
   process.env.NODE_ENV !== "production" && logger,
   sagaMiddleWare,

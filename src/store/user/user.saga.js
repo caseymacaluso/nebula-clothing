@@ -17,6 +17,9 @@ import {
   signOutUser,
 } from "../../utils/firebase/firebase.utils";
 
+//////////////////////////////////////////////////
+// Saga functions to
+//////////////////////////////////////////////////
 export function* getSnapshotFromUserAuth(userAuth, additionalDetails) {
   try {
     const userSnapshot = yield call(
@@ -88,6 +91,9 @@ export function* signOut() {
   }
 }
 
+//////////////////////////////////////////////////
+// Entry functions that take latest call of different actions and execute saga functions defined above.
+//////////////////////////////////////////////////
 export function* onGoogleSignInStart() {
   yield takeLatest(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START, signInWithGoogle);
 }
@@ -115,6 +121,9 @@ export function* onSignOutStart() {
   yield takeLatest(USER_ACTION_TYPES.SIGN_OUT_START, signOut);
 }
 
+//////////////////////////////////////////////////
+// Aggregator function to call all the entry functions
+//////////////////////////////////////////////////
 export function* userSaga() {
   yield all([
     call(onCheckUserSession),

@@ -6,6 +6,7 @@ import {
 } from "./categories.action";
 import { CATEGORIES_ACTION_TYPES } from "./categories.types";
 
+// Function to get the categories array, will be called further below
 export function* fetchCategoriesAsync() {
   try {
     const categoriesArray = yield call(getCategoriesAndDocuments);
@@ -15,6 +16,7 @@ export function* fetchCategoriesAsync() {
   }
 }
 
+// Generator function that listens for latest call of FETCH_CATEGORIES_START and executes the fetchCategoriesAsync function
 export function* onFetchCategories() {
   yield takeLatest(
     CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START,
@@ -22,6 +24,7 @@ export function* onFetchCategories() {
   );
 }
 
+// Generator function that will call all saga functions provided, and will not complete until all are executed
 export function* categoriesSaga() {
   yield all([call(onFetchCategories)]);
 }

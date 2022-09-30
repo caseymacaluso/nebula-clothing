@@ -120,7 +120,7 @@ export const getCurrentUser = () => {
     const unsubscribe = onAuthStateChanged(
       auth,
       userAuth => {
-        unsubscribe();
+        unsubscribe(); // close out user, we don't want to use up more memory than we need to
         resolve(userAuth);
       },
       reject
