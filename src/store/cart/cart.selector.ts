@@ -2,9 +2,10 @@
 // Selectors that look into the redux store state and derive information from that state.
 /////////////////////////////////////////
 import { createSelector } from "reselect";
+import { CartState } from "./cart.reducer";
 
 // Gets the cart portion of the redux store state
-const selectCartReducer = state => state.cart;
+const selectCartReducer = (state): CartState => state.cart;
 
 // Selector that looks at the cart state and selects the cartItems from that state.
 export const selectCartItems = createSelector(
