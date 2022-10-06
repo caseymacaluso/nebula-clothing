@@ -1,18 +1,30 @@
-import { compose, createStore, applyMiddleware } from "redux";
+import { compose, createStore, applyMiddleware, Middleware } from "redux";
 import logger from "redux-logger";
 // import thunk from "redux-thunk";
 import createSagaMiddleware from "@redux-saga/core";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore, persistReducer, PersistConfig } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 // root-reducer
 import { rootReducer } from "./root-reducer";
 import { rootSaga } from "./root-saga";
 
+export type RootState = ReturnType<typeof rootReducer>;
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+type ExtendedPersistConfig = PersistConfig<RootState> & {
+  whitelist: (keyof RootState)[];
+};
+
 // Configuration for Redux Persist
-const persistConfig = {
+const persistConfig: ExtendedPersistConfig = {
   key: "root",
   storage,
-  blacklist: ["user"],
+  whitelist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -23,7 +35,7 @@ const sagaMiddleWare = createSagaMiddleware();
 const middleWares = [
   process.env.NODE_ENV !== "production" && logger,
   sagaMiddleWare,
-].filter(Boolean);
+].filter((middleware): middleware is Middleware => Boolean(middleware));
 
 // Composer that enables Redux Dev Tools Chrome extension for development purposes. If redux devtools extension doesn't exist, use the normal compose from redux.
 const composeEnhancer =

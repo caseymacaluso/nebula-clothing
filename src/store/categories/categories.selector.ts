@@ -4,10 +4,12 @@
 import { createSelector } from "reselect";
 
 import { CategoriesState } from "./categories.reducer";
+import { RootState } from "../store";
 import { CategoryMap } from "./categories.types";
 
 // Gets the categories portion of the redux store state
-const selectCategoriesReducer = (state): CategoriesState => state.categories;
+const selectCategoriesReducer = (state: RootState): CategoriesState =>
+  state.categories;
 
 // Selector that looks at the categories state and gets the categories from that state
 export const selectCategories = createSelector(
