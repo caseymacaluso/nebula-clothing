@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import {
   googleSignInStart,
   emailSignInStart,
 } from "../../store/user/user.action";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 import {
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
@@ -30,7 +31,7 @@ const SignInForm = () => {
     dispatch(googleSignInStart());
   };
 
-  const onInputChange = evt => {
+  const onInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     // Destructure from evt.target
     const { name, value } = evt.target;
     // spread other objects of state, and only update the state of the field with the matching name (i.e. email, password, etc.)
@@ -41,24 +42,24 @@ const SignInForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleSubmit = async evt => {
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
+      switch ((error as AuthError).code) {
+        case AuthErrorCodes.INVALID_PASSWORD:
           alert("Password entered is incorrect. Try again");
           break;
-        case "auth/user-not-found":
+        case AuthErrorCodes.USER_DELETED:
           alert(
             "There does not appear to be an existing account with that email address."
           );
           break;
         default:
-          console.log(error.message);
+          console.log((error as AuthError).message);
       }
     }
   };

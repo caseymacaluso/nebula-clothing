@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -22,7 +23,7 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields; // Destructure from formFields object
 
-  const onInputChange = evt => {
+  const onInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     // Destructure from evt.target
     const { name, value } = evt.target;
     // spread other objects of state, and only update the state of the field with the matching name (i.e. email, password, etc.)
@@ -34,7 +35,7 @@ const SignUpForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleSubmit = async evt => {
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     // Prevents a page refresh on submit
     evt.preventDefault();
     // Does not proceed if password fields don't match
@@ -58,7 +59,7 @@ const SignUpForm = () => {
       // Resets form fields after document is created
       resetFormFields();
     } catch (e) {
-      if (e.code === "auth/email-already-in-use") {
+      if ((e as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
         alert(
           "The email you specified is associated with an existing account. Try again."
         );
