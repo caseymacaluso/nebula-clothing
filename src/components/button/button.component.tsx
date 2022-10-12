@@ -22,7 +22,7 @@ const getButton = (buttonType = buttonTypeClasses.base): typeof BaseButton =>
 
 export type ButtonProps = {
   buttonType?: buttonTypeClasses;
-  isLoading: boolean;
+  isLoading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: FC<ButtonProps> = ({
