@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Site Link
 
-This project has been deployed via Netlify at [https://majestic-puppy-4b524a.netlify.app/](https://majestic-puppy-4b524a.netlify.app/). Check it out!
+This project has been deployed via Netlify at --> [https://majestic-puppy-4b524a.netlify.app/](https://majestic-puppy-4b524a.netlify.app/) (I mean, come on, how cool of a name is that for a domain name?).
 
 ### About
 
