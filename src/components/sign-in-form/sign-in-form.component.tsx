@@ -5,10 +5,10 @@ import {
   emailSignInStart,
 } from "../../store/user/user.action";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
-import {
-  signInWithGooglePopup,
-  signInAuthUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utils";
+// import {
+//   signInWithGooglePopup,
+//   signInAuthUserWithEmailAndPassword,
+// } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button, { buttonTypeClasses } from "../button/button.component";
 import {

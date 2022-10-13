@@ -1,10 +1,10 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from "../../utils/firebase/firebase.utils";
+// import {
+//   createAuthUserWithEmailAndPassword,
+//   createUserDocumentFromAuth,
+// } from "../../utils/firebase/firebase.utils";
 import { signUpStart } from "../../store/user/user.action";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";

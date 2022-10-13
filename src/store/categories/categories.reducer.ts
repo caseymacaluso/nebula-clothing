@@ -1,8 +1,7 @@
 // Reducer focused on categories-related operations
 import { AnyAction } from "redux";
-import { CATEGORIES_ACTION_TYPES, Category } from "./categories.types";
+import { Category } from "./categories.types";
 import {
-  CategoryAction,
   fetchCategoriesFailed,
   fetchCategoriesStart,
   fetchCategoriesSuccess,
