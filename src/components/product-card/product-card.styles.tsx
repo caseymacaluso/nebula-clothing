@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { SCREEN_SIZE } from "../../constants";
 import {
   BaseButton,
   GoogleButton,
@@ -43,7 +44,7 @@ export const ProductCardContainer = styled.div`
     }
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: ${SCREEN_SIZE.md}px) {
     ${BaseButton},
     ${GoogleButton},
       ${InvertedButton} {

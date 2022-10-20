@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { SCREEN_SIZE } from "../../constants";
 import { Link } from "react-router-dom";
 
 export const CategoryPreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: ${SCREEN_SIZE.md}px) {
     align-items: center;
   }
 `;
